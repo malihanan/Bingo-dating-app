@@ -36,5 +36,46 @@ namespace Bingo.Controllers
             }
             return View("List");
         }
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+            using (BingoDbContext db = new BingoDbContext())
+            {
+                var get_user = db.Users.SingleOrDefault(p => p.UserName == user.UserName
+                && p.Password == user.Password);
+                if (get_user != null)
+                {
+                    Session["UserId"] = get_user.UserId.ToString();
+                    Session["UserName"] = get_user.UserName.ToString();
+                    return RedirectToAction("LoggedIn");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "UserName or Password does not match.");
+                }
+
+            }
+            return View();
+        }
+
+        public ActionResult LoggedIn()
+        {
+            object obj = Session["UserId"];
+            if (obj != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
+        }
+
     }
 }
+    
