@@ -7,9 +7,10 @@
 
 @if (Session["UserName"] != null)
 {
-
-   <h1> Hello, @Session["UserName"].ToString()</h1>
-
-
+    <h1> Hello, @Session["UserName"].ToString()</h1>
+    <p>
+        @Html.ActionLink("Add Profile Picture", "AddProfilePicture", "User", null, new { @class = "btn btn-primary btn-lg" })
+        @Html.ActionLink("Edit Profile", "Edit", "User", new { id = Session["UserId"] }, new { @class = "btn btn-primary btn-lg" })
+    </p>
 }
 

@@ -9,6 +9,7 @@ namespace Bingo.Models
         public BingoDbContext()
             : base("name=BingoDbContext")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<BingoDbContext, Bingo.Migrations.Configuration>());
         }
 
         public virtual DbSet<User> Users { get; set; }
