@@ -142,6 +142,22 @@
     <Compile Include="Migrations\201911041215531_BingoDb-v1.designer.cs">
       <DependentUpon>201911041215531_BingoDb-v1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911061116431_BingoDb-v2.cs" />
+    <Compile Include="Migrations\201911061116431_BingoDb-v2.designer.cs">
+      <DependentUpon>201911061116431_BingoDb-v2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911061517543_BingoDb-v3.cs" />
+    <Compile Include="Migrations\201911061517543_BingoDb-v3.designer.cs">
+      <DependentUpon>201911061517543_BingoDb-v3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911061616154_BingoDb-v4.cs" />
+    <Compile Include="Migrations\201911061616154_BingoDb-v4.designer.cs">
+      <DependentUpon>201911061616154_BingoDb-v4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911061712038_BingoDb-v5.cs" />
+    <Compile Include="Migrations\201911061712038_BingoDb-v5.designer.cs">
+      <DependentUpon>201911061712038_BingoDb-v5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BingoDbContext.cs" />
     <Compile Include="Models\User.cs" />
@@ -188,6 +204,8 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\LoggedIn.cshtml" />
     <Content Include="Views\User\AddProfilePicture.cshtml" />
+    <Content Include="Views\User\Signup.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +230,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911041215531_BingoDb-v1.resx">
       <DependentUpon>201911041215531_BingoDb-v1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911061116431_BingoDb-v2.resx">
+      <DependentUpon>201911061116431_BingoDb-v2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911061517543_BingoDb-v3.resx">
+      <DependentUpon>201911061517543_BingoDb-v3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911061616154_BingoDb-v4.resx">
+      <DependentUpon>201911061616154_BingoDb-v4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911061712038_BingoDb-v5.resx">
+      <DependentUpon>201911061712038_BingoDb-v5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

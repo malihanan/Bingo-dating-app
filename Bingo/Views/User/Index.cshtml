@@ -1,0 +1,131 @@
+﻿@model Bingo.Models.User
+
+@{
+    ViewBag.Title = "Index";
+}
+<table>
+    <tr>
+        <td>
+            @if (Model.ProfilePicture != null)
+            {
+                var base64 = Convert.ToBase64String(Model.ProfilePicture);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                <div style="background-image: url(@imgsrc)" class="profile-picture"></div>
+            }
+        </td>
+        <td>
+            <h2>
+                <small><span class="glyphicon glyphicon-user"></span></small>
+                @Html.DisplayFor(model => model.UserName)
+            </h2>
+            <h4>
+                @Html.DisplayFor(model => model.FirstName)
+                @Html.DisplayFor(model => model.LastName)
+            </h4>
+            <h5>
+                <small><span class="glyphicon glyphicon-envelope"></span></small>
+                @Html.DisplayFor(model => model.EmailId)
+            </h5>
+        </td>
+    </tr>
+</table>
+<div>
+    <hr />
+    <p>
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+        @Html.DisplayFor(model => model.Bio)
+    </p>
+    <dl class="dl-horizontal">
+        @if (Model.Gender != null)
+        {
+            <dt>
+                <span class="glyphicon glyphicon-heart-empty"></span>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+        }
+
+        @if (Model.DisplayBirthdate)
+        {
+            <dt>
+                <span class="glyphicon glyphicon-calendar"></span>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Birthdate)
+            </dd>
+        }
+
+        @if (Model.Contact != null)
+        {
+            <dt>
+                <span class="glyphicon glyphicon-earphone"></span>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Contact)
+            </dd>
+        }
+
+        @if (Model.City != null)
+        {
+            <dt>
+                <span class="glyphicon glyphicon-map-marker"></span>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+        }
+
+        @if (Model.Occupation != null)
+        {
+            <dt>
+                <span class="glyphicon glyphicon-briefcase"></span>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Occupation)
+            </dd>
+        }
+
+        @if (Model.Likes != null)
+        {
+            <dt>
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Likes)
+            </dd>
+        }
+
+        @if (Model.Dislikes != null)
+        {
+            <dt>
+                <span class="glyphicon glyphicon-thumbs-down"></span>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Dislikes)
+            </dd>
+        }
+
+        @if (Model.Hobbies != null)
+        {
+            <dt>
+                <span class="glyphicon glyphicon-headphones"></span>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Hobbies)
+            </dd>
+        }
+
+    </dl>
+</div>
+<p>
+    @if (Int32.Parse(Session["UserId"].ToString()) == Model.UserId)
+    {
+        @Html.ActionLink("Edit", "Edit")
+    }
+    else
+    {
+        @Html.ActionLink("Like", "Like")
+    }
+    | @Html.ActionLink("Back to List", "Index")
+</p>

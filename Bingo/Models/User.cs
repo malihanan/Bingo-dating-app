@@ -21,9 +21,35 @@ namespace Bingo.Models
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [RegularExpression(@"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$",
+            ErrorMessage = "Contact is invalid.")]
+        public string Contact { get; set; }
+        public string Gender { get; set; }
+        [Required]
+        [ValidateDateRange]
+        public DateTime Birthdate { get; set; }
+        public bool DisplayBirthdate { get; set; }
+        public string City { get; set; }
+        public string Occupation { get; set; }
         public byte[] ProfilePicture { get; set; }
         public string Bio { get; set; }
         public string Likes { get; set; }
         public string Dislikes { get; set; }
+        public string Hobbies { get; set; }
+    }
+}
+public class ValidateDateRange : ValidationAttribute
+{
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
+        if ((DateTime)value <= DateTime.Now.AddYears(-18))
+        {
+            return ValidationResult.Success;
+        }
+        else
+        {
+            int year = 18 - (DateTime.Now.Year - ((DateTime)value).Year);
+            return new ValidationResult("Come back after " + year + " years");
+        }
     }
 }

@@ -22,3 +22,17 @@ select,
 textarea {
     max-width: 280px;
 }
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    -webkit-border-radius: 150px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 150px;
+    -moz-background-clip: padding;
+    border-radius: 150px;
+    background-clip: padding-box;
+    margin: 7px 30px 0 5px;
+    float: left;
+    background-position: center center;
+}
