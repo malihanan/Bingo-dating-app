@@ -10,9 +10,25 @@ using Bingo.Models;
 
 namespace Bingo.Controllers
 {
+    
     public class UserController : Controller
     {
         private BingoDbContext ctx = new BingoDbContext();
+
+        // Check Email Exists or not in DB  
+        public bool IsEmailExists(string eMail)
+        {
+            var IsCheck = ctx.Users.Where(email => email.EmailId == eMail).FirstOrDefault();
+            return IsCheck != null;
+        }
+
+        // Check Username Exists or not in DB  
+        public bool IsUserNameExists(string uName)
+        {
+            var IsCheck = ctx.Users.Where(uname => uname.UserName == uName).FirstOrDefault();
+            return IsCheck != null;
+        }
+
 
         // GET: User
         public ActionResult Index(int? id)
@@ -54,6 +70,17 @@ namespace Bingo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Signup(User user)
         {
+            var IsExistsEmail = IsEmailExists(user.EmailId);
+            if (IsExistsEmail)
+            {
+                ModelState.AddModelError("EmailExists", "Email Already Exists");
+            }
+
+            var IsExistsUserName = IsUserNameExists(user.UserName);
+            if (IsExistsUserName)
+            {
+                ModelState.AddModelError("UsernameExists", "Username Already Exists");
+            }
             if (ModelState.IsValid)
             {
                 ctx.Users.Add(user);
