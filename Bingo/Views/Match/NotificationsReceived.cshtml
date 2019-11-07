@@ -1,0 +1,46 @@
+﻿@model List<Bingo.Models.Notification>
+@{
+    ViewBag.Title = "NotificationsReceived";
+}
+
+<h2>NotificationsReceived</h2>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.ProfilePicture != null)
+                {
+                    var base64 = Convert.ToBase64String(item.ProfilePicture);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <div style="background-image:url(@imgsrc);height:75px;width:75px;" class="profile-picture"></div>
+                }
+                else
+                {
+                    <div style="height:45px;width:45px;margin:35px;color:lightgray;" class="profile-picture"><span class="glyphicon glyphicon-user"></span></div>
+                }
+                <h4>@item.UserName</h4>
+                <h5>
+                    @item.FirstName
+                    @item.LastName
+                </h5>
+            </td>
+            <td>
+                @item.Bio
+            </td>
+            <td>
+                Received at
+                @item.SenderTime
+            </td>
+            <td>
+                @Html.ActionLink("Yes", "Send", "Match", new { id = item.SenderId, result = true }, null)
+                @Html.ActionLink("No", "Send", "Match", new { id = item.SenderId, result = false }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

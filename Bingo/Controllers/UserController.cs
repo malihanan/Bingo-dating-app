@@ -13,19 +13,19 @@ namespace Bingo.Controllers
     
     public class UserController : Controller
     {
-        private BingoDbContext ctx = new BingoDbContext();
+        private BingoDbContext db = new BingoDbContext();
 
         // Check Email Exists or not in DB  
-        public bool IsEmailExists(string eMail)
+        private bool IsEmailExists(string eMail)
         {
-            var IsCheck = ctx.Users.Where(email => email.EmailId == eMail).FirstOrDefault();
+            var IsCheck = db.Users.Where(email => email.EmailId == eMail).FirstOrDefault();
             return IsCheck != null;
         }
 
         // Check Username Exists or not in DB  
-        public bool IsUserNameExists(string uName)
+        private bool IsUserNameExists(string uName)
         {
-            var IsCheck = ctx.Users.Where(uname => uname.UserName == uName).FirstOrDefault();
+            var IsCheck = db.Users.Where(uname => uname.UserName == uName).FirstOrDefault();
             return IsCheck != null;
         }
 
@@ -40,7 +40,7 @@ namespace Bingo.Controllers
                 {
                     id = Int32.Parse(obj.ToString());
                 }
-                User user = ctx.Users.Find(id);
+                User user = db.Users.Find(id);
                 return View("Index", user);
             }
             else
@@ -51,9 +51,25 @@ namespace Bingo.Controllers
 
         public ActionResult List()
         {
-            if (Session["Role"] != null && Session["Role"].ToString() == "admin")
+            object obj = Session["UserId"];
+            if (obj != null)
             {
-                return View(ctx.Users.ToList());
+                int uId = Int32.Parse(obj.ToString());
+                IEnumerable<User> matchedUsers = (from u in db.Users
+                                    from m in db.Matches 
+                                    where (u.UserId == uId) || (m.SenderId == uId && m.ReceiverId == u.UserId)
+                                    select u).ToList();
+                IEnumerable<User> users;
+                if (matchedUsers.Count() != 0)
+                {
+                    users = (from u in db.Users select u).ToList();
+                    users = users.Except(matchedUsers);
+                }
+                else
+                {
+                    users = db.Users.Where(u => u.UserId != uId).ToList();
+                }
+                return View(users);
             }
             else
             {
@@ -83,8 +99,8 @@ namespace Bingo.Controllers
             }
             if (ModelState.IsValid)
             {
-                ctx.Users.Add(user);
-                ctx.SaveChanges();
+                db.Users.Add(user);
+                db.SaveChanges();
                 return RedirectToAction("Login");
             }
             return View();
@@ -96,7 +112,7 @@ namespace Bingo.Controllers
             if (obj != null)
             {
                 int uId = Int32.Parse(obj.ToString());
-                User user = ctx.Users.Find(uId);
+                User user = db.Users.Find(uId);
                 return View(user);
             }
             else
@@ -109,10 +125,10 @@ namespace Bingo.Controllers
         public ActionResult Edit(HttpPostedFileBase file1)
         {
             object obj = Session["UserId"];
-            int uId = Int32.Parse(obj.ToString());
             if (obj != null)
             {
-                var userToUpdate = ctx.Users.Find(uId);
+                int uId = Int32.Parse(obj.ToString());
+                var userToUpdate = db.Users.Find(uId);
                 if (TryUpdateModel(userToUpdate, "", new string[] {
                     "UserName", "FirstName", "LastName", "Gender", "DisplayBirthdate", "City", "Occupation",
                     "ProfilePicture", "Bio", "Likes", "Dislikes", "Hobbies", "Contact" }))
@@ -124,7 +140,7 @@ namespace Bingo.Controllers
                             userToUpdate.ProfilePicture = new byte[file1.ContentLength];
                             file1.InputStream.Read(userToUpdate.ProfilePicture, 0, file1.ContentLength);
                         }
-                        ctx.SaveChanges();
+                        db.SaveChanges();
 
                         return RedirectToAction("Index", "User", null);
                     }
@@ -145,7 +161,7 @@ namespace Bingo.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            var get_user = ctx.Users.SingleOrDefault(p => p.UserName == user.UserName
+            var get_user = db.Users.SingleOrDefault(p => p.UserName == user.UserName
             && p.Password == user.Password);
             if (get_user != null)
             {
@@ -204,11 +220,11 @@ namespace Bingo.Controllers
                 if (file1 != null && file1.ContentLength > 0)
                 {
                     int uId = Int32.Parse(Session["UserId"].ToString());
-                    User user = ctx.Users.SingleOrDefault(p => p.UserId == uId);
+                    User user = db.Users.SingleOrDefault(p => p.UserId == uId);
                     user.ProfilePicture = new byte[file1.ContentLength];
                     file1.InputStream.Read(user.ProfilePicture, 0, file1.ContentLength);
-                    ctx.Entry(user).State = EntityState.Modified;
-                    ctx.SaveChanges();
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
                 return View("LoggedIn");
             }*/

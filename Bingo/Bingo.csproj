@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -158,8 +159,18 @@
     <Compile Include="Migrations\201911061712038_BingoDb-v5.designer.cs">
       <DependentUpon>201911061712038_BingoDb-v5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911071129094_BingoDb-v6.cs" />
+    <Compile Include="Migrations\201911071129094_BingoDb-v6.designer.cs">
+      <DependentUpon>201911071129094_BingoDb-v6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911071246265_BingoDb-v7.cs" />
+    <Compile Include="Migrations\201911071246265_BingoDb-v7.designer.cs">
+      <DependentUpon>201911071246265_BingoDb-v7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BingoDbContext.cs" />
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -207,6 +218,7 @@
     <Content Include="Views\User\Signup.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Match\NotificationsReceived.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -242,6 +254,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911061712038_BingoDb-v5.resx">
       <DependentUpon>201911061712038_BingoDb-v5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911071129094_BingoDb-v6.resx">
+      <DependentUpon>201911071129094_BingoDb-v6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911071246265_BingoDb-v7.resx">
+      <DependentUpon>201911071246265_BingoDb-v7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
