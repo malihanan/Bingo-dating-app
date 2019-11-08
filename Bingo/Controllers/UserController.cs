@@ -58,7 +58,8 @@ namespace Bingo.Controllers
                 IEnumerable<User> matchedUsers = (from u in db.Users
                                     from m in db.Matches 
                                     where (u.UserId == uId) || (m.SenderId == uId && m.ReceiverId == u.UserId)
-                                    select u).ToList();
+                                                            || (m.ReceiverId == uId && m.SenderId == u.UserId)
+                                                  select u).ToList();
                 IEnumerable<User> users;
                 if (matchedUsers.Count() != 0)
                 {

@@ -12,6 +12,10 @@
                 var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                 <div style="background-image: url(@imgsrc)" class="profile-picture"></div>
             }
+            else
+            {
+                <div style="color:lightgray" class="profile-picture"><span class="glyphicon glyphicon-picture" style="margin:75px"></span></div>
+            }
         </td>
         <td>
             <h2>
@@ -125,7 +129,9 @@
     }
     else
     {
-        @Html.ActionLink("Like", "Like")
+        <text>Like them:
+            @Html.ActionLink("Yes", "Send", "Match", new { id = Model.UserId, result = true }, null) <text> | </text>
+            @Html.ActionLink("No", "Send", "Match", new { id = Model.UserId, result = false }, null)
+        </text>
     }
-    | @Html.ActionLink("Back to List", "Index")
 </p>

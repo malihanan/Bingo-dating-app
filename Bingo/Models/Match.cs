@@ -17,7 +17,7 @@ namespace Bingo.Models
         public bool SenderResult { get; set; }
         [Required]
         public DateTime? SenderTime { get; set; }
-        public bool ReceiverResult { get; set; }
+        public bool? ReceiverResult { get; set; }
         public DateTime? ReceiverTime { get; set; }
     }
 }

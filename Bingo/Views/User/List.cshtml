@@ -4,11 +4,8 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>Recommendations for you</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th width="300px;">
@@ -36,9 +33,13 @@
         }
         else
         {
-            <div style="height:45px;width:45px;margin:35px;color:lightgray;" class="profile-picture"><span class="glyphicon glyphicon-user"></span></div>
+            <div style="height:45px;width:45px;margin:35px;color:lightgray;" class="profile-picture">
+                <span class="glyphicon glyphicon-picture"></span>
+            </div>
         }
-        <h4>@Html.DisplayFor(modelItem => item.UserName)</h4>
+        <a href="@Url.Action("Index", "User", new { id = item.UserId })">
+            <h4>@Html.DisplayFor(modelItem => item.UserName)</h4>
+        </a>
         <h5>
             @Html.DisplayFor(modelItem => item.FirstName)
             @Html.DisplayFor(modelItem => item.LastName)
@@ -51,7 +52,7 @@
         @Html.DisplayFor(modelItem => item.Bio)
     </td>
     <td>
-        @Html.ActionLink("Yes", "Send", "Match", new { id = item.UserId, result = true }, null)
+        @Html.ActionLink("Yes", "Send", "Match", new { id = item.UserId, result = true }, null) <text> | </text>
         @Html.ActionLink("No", "Send", "Match", new { id = item.UserId, result = false }, null)
     </td>
 </tr>

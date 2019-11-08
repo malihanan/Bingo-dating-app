@@ -1,0 +1,88 @@
+﻿@model List<Bingo.Models.Notification>
+@{
+    if (ViewBag.direction == "Received")
+    {
+        ViewBag.Title = "Notifications Received";
+    }
+    else
+    {
+        ViewBag.Title = "Notifications Sent";
+    }
+}
+
+@if (ViewBag.direction == "Received")
+{
+    <h2>Notifications Received</h2>
+}
+else
+{
+    <h2>Notifications Sent</h2>
+}
+
+<table class="table">
+    <tr>
+        <td style="width:50%; text-align:center">
+            <a href="@Url.Action("NotificationsSent", "Match", null)"><span class="glyphicon glyphicon-arrow-up"> Sent</span></a>
+        </td>
+        <td style="width:50%; text-align:center">
+            <a href="@Url.Action("NotificationsReceived", "Match", null)"><span class="glyphicon glyphicon-arrow-down"> Received</span></a>
+        </td>
+    </tr>
+</table>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.ProfilePicture != null)
+                {
+                    var base64 = Convert.ToBase64String(item.ProfilePicture);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <div style="background-image:url(@imgsrc);height:75px;width:75px;" class="profile-picture"></div>
+                }
+                else
+                {
+                    <div style="height:45px;width:45px;margin:35px;color:lightgray;" class="profile-picture"><span class="glyphicon glyphicon-user"></span></div>
+                }
+                <h4>@item.UserName</h4>
+                <h5>
+                    @item.FirstName
+                    @item.LastName
+                </h5>
+            </td>
+            <td>
+                @item.Bio
+            </td>
+            <td>
+                @if (ViewBag.direction == "Received")
+                {
+                    <text>Received at @item.Time</text>
+                }
+                else
+                {
+                    <text>Sent at @item.Time</text>
+                }
+            </td>
+            <td>
+                @if (ViewBag.direction == "Received" && item.Result == null)
+                {
+                    @Html.ActionLink("Yes", "Send", "Match", new { id = item.UserId, result = true }, null) <text> | </text>
+                    @Html.ActionLink("No", "Send", "Match", new { id = item.UserId, result = false }, null)
+                }
+                else if (item.Result == true)
+                {
+                    <text>It's a Match</text>
+                }
+                else if (item.Result == false)
+                {
+                    <text>Not a Match</text>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
