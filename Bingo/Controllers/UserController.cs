@@ -70,6 +70,7 @@ namespace Bingo.Controllers
                 {
                     users = db.Users.Where(u => u.UserId != uId).ToList();
                 }
+                users = sort(users);
                 return View(users);
             }
             else
@@ -188,48 +189,183 @@ namespace Bingo.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
-        /*
-            public ActionResult LoggedIn()
+        private IEnumerable<User> sort(IEnumerable<User> users)
+        {
+            int uId = Int32.Parse(Session["UserId"].ToString());
+            User currentUser = db.Users.Find(uId);
+            List<Int32> scores = new List<Int32>();
+            int score;
+            foreach (User user in users)
             {
-                object obj = Session["UserId"];
-                if (obj != null)
+                score = 0;
+                if (currentUser.Gender != null)
                 {
-                    return View();
+                    if (user.Gender == null)
+                    {
+                        score += 20;
+                    } else if ((currentUser.Gender != "Other" && user.Gender != currentUser.Gender)
+                            || (currentUser.Gender == "Other" && user.Gender == "Other"))
+                    {
+                        score += 50;
+                    }
                 }
-                else
+                if (currentUser.Occupation != null && user.Occupation != null &&
+                    JaroWinklerDistance.proximity(currentUser.Occupation, user.Occupation) >= 0.8)
                 {
-                    return RedirectToAction("Login");
+                    score += 10;
                 }
+                if (currentUser.City != null && user.City != null &&
+                    JaroWinklerDistance.proximity(currentUser.City, user.City) >= 0.8)
+                {
+                    score += 10;
+                }
+                if (currentUser.Likes != null && user.Likes != null)
+                {
+                    score += matchWordsScore(currentUser.Likes, user.Likes);
+                }
+                if (currentUser.Dislikes != null && user.Dislikes != null)
+                {
+                    score += matchWordsScore(currentUser.Dislikes, user.Dislikes);
+                }
+                if (currentUser.Hobbies != null && user.Hobbies != null)
+                {
+                    score += matchWordsScore(currentUser.Hobbies, user.Hobbies);
+                }
+                if (currentUser.Bio != null && user.Bio != null)
+                {
+                    score += matchWordsScore(currentUser.Bio, user.Bio);
+                }
+                scores.Add(score);
             }
-
+            var orderedZip = scores.Zip(users, (x, y) => new { x, y })
+                                    .OrderByDescending(pair => pair.x)
+                                    .ToList();
+            users = orderedZip.Select(pair => pair.y).ToList();
+            return users;
         }
-            public ActionResult AddProfilePicture()
-            {
-                object obj = Session["UserId"];
-                if (obj != null)
-                {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Login");
-                }
-            }
-            [HttpPost]
-            public ActionResult AddProfilePicture(HttpPostedFileBase file1)
-            {
-                if (file1 != null && file1.ContentLength > 0)
-                {
-                    int uId = Int32.Parse(Session["UserId"].ToString());
-                    User user = db.Users.SingleOrDefault(p => p.UserId == uId);
-                    user.ProfilePicture = new byte[file1.ContentLength];
-                    file1.InputStream.Read(user.ProfilePicture, 0, file1.ContentLength);
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                return View("LoggedIn");
-            }*/
 
+        private int matchWordsScore(string search, string part)
+        {
+            System.Console.WriteLine(search, part);
+            var s = search.ToLower().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            int count = part.Split(new char[] { ' ' }).Sum(p => s.Contains(p.ToLower()) ? 1 : 0);
+            int score = 0;
+            switch (count)
+            {
+                case 0:
+                    break;
+                case 1:
+                    score += 5;
+                    break;
+                case 2:
+                    score += 10;
+                    break;
+                case 3:
+                    score += 15;
+                    break;
+                default:
+                    score += 20;
+                    break;
+            }
+            return score;
+        }
+    }
+}
+
+static class JaroWinklerDistance
+{
+    /* The Winkler modification will not be applied unless the 
+        * percent match was at or above the mWeightThreshold percent 
+        * without the modification. 
+        * Winkler's paper used a default value of 0.7
+        */
+    private static readonly double mWeightThreshold = 0.7;
+
+    /* Size of the prefix to be concidered by the Winkler modification. 
+        * Winkler's paper used a default value of 4
+        */
+    private static readonly int mNumChars = 4;
+
+
+    /// <summary>
+    /// Returns the Jaro-Winkler distance between the specified  
+    /// strings. The distance is symmetric and will fall in the 
+    /// range 0 (perfect match) to 1 (no match). 
+    /// </summary>
+    /// <param name="aString1">First String</param>
+    /// <param name="aString2">Second String</param>
+    /// <returns></returns>
+    public static double distance(string aString1, string aString2)
+    {
+        return 1.0 - proximity(aString1, aString2);
     }
 
+
+    /// <summary>
+    /// Returns the Jaro-Winkler distance between the specified  
+    /// strings. The distance is symmetric and will fall in the 
+    /// range 0 (no match) to 1 (perfect match). 
+    /// </summary>
+    /// <param name="aString1">First String</param>
+    /// <param name="aString2">Second String</param>
+    /// <returns></returns>
+    public static double proximity(string aString1, string aString2)
+    {
+        int lLen1 = aString1.Length;
+        int lLen2 = aString2.Length;
+        if (lLen1 == 0)
+            return lLen2 == 0 ? 1.0 : 0.0;
+
+        int lSearchRange = Math.Max(0, Math.Max(lLen1, lLen2) / 2 - 1);
+
+        // default initialized to false
+        bool[] lMatched1 = new bool[lLen1];
+        bool[] lMatched2 = new bool[lLen2];
+
+        int lNumCommon = 0;
+        for (int i = 0; i < lLen1; ++i)
+        {
+            int lStart = Math.Max(0, i - lSearchRange);
+            int lEnd = Math.Min(i + lSearchRange + 1, lLen2);
+            for (int j = lStart; j < lEnd; ++j)
+            {
+                if (lMatched2[j]) continue;
+                if (aString1[i] != aString2[j])
+                    continue;
+                lMatched1[i] = true;
+                lMatched2[j] = true;
+                ++lNumCommon;
+                break;
+            }
+        }
+        if (lNumCommon == 0) return 0.0;
+
+        int lNumHalfTransposed = 0;
+        int k = 0;
+        for (int i = 0; i < lLen1; ++i)
+        {
+            if (!lMatched1[i]) continue;
+            while (!lMatched2[k]) ++k;
+            if (aString1[i] != aString2[k])
+                ++lNumHalfTransposed;
+            ++k;
+        }
+        // System.Diagnostics.Debug.WriteLine("numHalfTransposed=" + numHalfTransposed);
+        int lNumTransposed = lNumHalfTransposed / 2;
+
+        // System.Diagnostics.Debug.WriteLine("numCommon=" + numCommon + " numTransposed=" + numTransposed);
+        double lNumCommonD = lNumCommon;
+        double lWeight = (lNumCommonD / lLen1
+                            + lNumCommonD / lLen2
+                            + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
+
+        if (lWeight <= mWeightThreshold) return lWeight;
+        int lMax = Math.Min(mNumChars, Math.Min(aString1.Length, aString2.Length));
+        int lPos = 0;
+        while (lPos < lMax && aString1[lPos] == aString2[lPos])
+            ++lPos;
+        if (lPos == 0) return lWeight;
+        return lWeight + 0.1 * lPos * (1.0 - lWeight);
+
+    }
 }

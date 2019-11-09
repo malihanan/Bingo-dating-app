@@ -8,16 +8,13 @@
 
 <table class="table">
     <tr>
-        <th width="300px;">
+        <th style="width:300px;">
             <span class="glyphicon glyphicon-user" style=" margin-left: 100px;"></span>
         </th>
-        <th width="200px;">
-            <span class="glyphicon glyphicon-heart-empty"></span>
+        <th style="width:200px;">
+            Bio
         </th>
-        <th width="200px;"">
-            <span class="glyphicon glyphicon-pencil"></span>
-        </th>
-        <th width="150px;">
+        <th style="width:150px;">
             @Html.DisplayName("Like them")
         </th>
     </tr>
@@ -44,9 +41,6 @@
             @Html.DisplayFor(modelItem => item.FirstName)
             @Html.DisplayFor(modelItem => item.LastName)
         </h5>
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Gender)
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.Bio)
