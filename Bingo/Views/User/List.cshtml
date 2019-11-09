@@ -8,13 +8,13 @@
 
 <table class="table">
     <tr>
-        <th style="width:300px;">
+        <th style="width:33%;">
             <span class="glyphicon glyphicon-user" style=" margin-left: 100px;"></span>
         </th>
-        <th style="width:200px;">
+        <th style="width:33%;">
             Bio
         </th>
-        <th style="width:150px;">
+        <th style="width:33%;">
             @Html.DisplayName("Like them")
         </th>
     </tr>
@@ -46,8 +46,16 @@
         @Html.DisplayFor(modelItem => item.Bio)
     </td>
     <td>
-        @Html.ActionLink("Yes", "Send", "Match", new { id = item.UserId, result = true }, null) <text> | </text>
-        @Html.ActionLink("No", "Send", "Match", new { id = item.UserId, result = false }, null)
+        <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = true })" style="text-decoration: none;">
+            <div class="profile-picture" style="width:50px; height:50px; background-color: #fc03b6; margin-top:0">
+                <span class="glyphicon glyphicon-ok-circle" style="color: white; margin:5px; font-size: 40px;"></span>
+            </div>
+        </a>
+        <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = false })" style="text-decoration: none;">
+            <div class="profile-picture" style="width:50px; height:50px; background-color: cyan; margin-top:0">
+                <span class="glyphicon glyphicon-remove-circle" style="color: white; margin:5px; font-size: 40px;"></span>
+            </div>
+        </a>
     </td>
 </tr>
 }
