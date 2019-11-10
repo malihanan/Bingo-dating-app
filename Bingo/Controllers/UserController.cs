@@ -49,7 +49,7 @@ namespace Bingo.Controllers
             }
         }
 
-        public ActionResult List()
+        public ActionResult List(String searchString)
         {
             object obj = Session["UserId"];
             if (obj != null)
@@ -61,6 +61,13 @@ namespace Bingo.Controllers
                                                             || (m.ReceiverId == uId && m.SenderId == u.UserId)
                                                   select u).ToList();
                 IEnumerable<User> users;
+                IEnumerable<User> searches;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    searches = db.Users.Where(u => u.UserName.Contains(searchString) && u.UserId != uId).ToList();
+                    return View(searches);
+                }
+
                 if (matchedUsers.Count() != 0)
                 {
                     users = (from u in db.Users select u).ToList();

@@ -33,6 +33,13 @@
                         <li>@Html.ActionLink("Notifications", "NotificationsReceived", "Match")</li>
                         <li>@Html.ActionLink("List", "List", "User")</li>
                         <li style="float:right;">@Html.ActionLink("Logout", "Logout", "User")</li>
+                        <li style="float:right; margin-top:12px;">
+                            <form action="@Url.Action("List", "User")">
+
+                                <input type="text" placeholder="Search..." name="SearchString">
+                                <input type="submit" value="Search" />
+                            </form>
+                        </li>
                     }
                 </ul>
             </div>
