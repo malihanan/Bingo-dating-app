@@ -14,5 +14,6 @@ namespace Bingo.Models
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Match> Matches { get; set; }
+        public virtual DbSet<Conversation> Conversations { get; set; }
     }
 }

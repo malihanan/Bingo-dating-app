@@ -36,3 +36,90 @@ textarea {
     float: left;
     background-position: center center;
 }
+
+.chat__body {
+  display: none;
+  position: relative;
+  background-color: #f2f2f2;
+  height: 600px;
+}
+
+.chat__body .chat__main .__chat__ {
+  padding: 15px 15px;
+  border-radius: 20px;
+  margin: 20px 20px 0px 20px;
+  width: 65%;
+}
+
+.chat__body .chat__main .__chat__ p {
+  font-weight: 400;
+}
+
+.chat__body .chat__main .__chat__ p.delivery-status {
+  display: none;
+  font-size: 12px;
+  float: right;
+  top: -10px;
+  position: relative;
+}
+
+.chat__body .chat__main .__chat__.from__chat {
+  background-color: #d9d9d9;
+}
+
+.chat__body .chat__main .__chat__.receive__chat {
+  background-color: #4d9aff;
+  float: right;
+  color: #fff;
+}
+
+.chat__body .chat__type__body {
+  position: absolute;
+  height: 50px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+}
+
+.chat__body .chat__type__body .chat__type {
+  background-color: #e6e6e6;
+  width: 100%;
+}
+
+.chat__body .chat__type__body .chat__type textarea {
+  background-color: inherit;
+  width: 85%;
+  padding: 10px 10px 0px;
+  border: none;
+  display: inline-block;
+}
+
+.chat__body .chat__type__body .chat__type #sendMessage {
+  position: relative;
+  display: inline-block;
+  top: -15px;
+  width: 14%;
+}
+
+.chat__body .typing_display__open {
+  bottom: 30px;
+}
+
+.chat__body .chat__typing {
+  position: absolute;
+  display: none;
+  height: 30px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  background-color: #f2f2f2;
+  padding: 5px;
+}
+
+.chat__body .chat__typing span {
+  font-style: italic;
+  font-size: 12px;
+  color: #999999;
+}

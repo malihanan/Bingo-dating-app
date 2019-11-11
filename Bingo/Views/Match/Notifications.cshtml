@@ -113,7 +113,9 @@ else
                         </tr>
                         <tr>
                             <td>
-                                @Html.ActionLink("Say Hi", "Index", "User", null, new { @class = "btn btn-success btn-sm" })
+                                <a class = "btn btn-success btn-sm" href="@Url.Action("ConversationWithContact", "Match", new { contact = item.UserId})">
+                                    Say hi
+                                </a>
                             </td>
                         </tr>
                     </table>

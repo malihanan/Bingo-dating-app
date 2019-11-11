@@ -107,5 +107,59 @@ namespace Bingo.Controllers
                 return RedirectToAction("Login", "User", null);
             }
         }
+        public ActionResult ConversationWithContact(int contact)
+        {
+            object obj = Session["UserId"];
+            Session["Reciver"] = contact.ToString();
+            if (obj != null)
+            {
+                int uId = Int32.Parse(obj.ToString());
+
+                IEnumerable<Conversation> conversations = (from c in db.Conversations
+                                                           where (c.receiver_id == uId && c.sender_id == contact) || (c.receiver_id == contact && c.sender_id == uId)
+                                                           orderby c.created_at 
+                                                           select c).ToList();
+                ViewBag.currentUser = uId;
+                return View(conversations);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User", null);
+
+            }
+        }
+        [HttpPost]
+        public ActionResult ConversationWithContact(String messages)
+        {
+            object obj = Session["UserId"];
+            object obj2 = Session["Reciver"];
+            if (obj != null)
+            {
+
+                int uId = Int32.Parse(obj.ToString());
+                int rId = Int32.Parse(obj2.ToString());
+
+                db.Conversations.Add(new Conversation()
+                {
+                    sender_id = uId,
+                    message = messages,
+                    receiver_id = rId,
+                    created_at = DateTime.Now
+                });
+                db.SaveChanges();
+
+                IEnumerable<Conversation> conversations = (from c in db.Conversations
+                                                           where (c.receiver_id == uId && c.sender_id == rId) || (c.receiver_id == rId && c.sender_id == uId)
+                                                           orderby c.created_at
+                                                           select c).ToList();
+                System.Console.Write(uId.ToString(), rId);
+                ViewBag.currentUser = uId;
+                return View(conversations);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User", null);
+            }
+        }
     }
 }
