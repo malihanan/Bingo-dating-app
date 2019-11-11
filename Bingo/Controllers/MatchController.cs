@@ -95,7 +95,7 @@ namespace Bingo.Controllers
                                                         LastName = u2.LastName,
                                                         ProfilePicture = u2.ProfilePicture,
                                                         Bio = u2.Bio,
-                                                        UserId = m.SenderId,
+                                                        UserId = m.ReceiverId,
                                                         Time = m.SenderTime,
                                                         Result = m.ReceiverResult
                                                     }).ToList();
@@ -117,7 +117,7 @@ namespace Bingo.Controllers
 
                 IEnumerable<Conversation> conversations = (from c in db.Conversations
                                                            where (c.receiver_id == uId && c.sender_id == contact) || (c.receiver_id == contact && c.sender_id == uId)
-                                                           orderby c.created_at 
+                                                           orderby c.created_at ascending
                                                            select c).ToList();
                 ViewBag.currentUser = uId;
                 return View(conversations);
@@ -150,7 +150,7 @@ namespace Bingo.Controllers
 
                 IEnumerable<Conversation> conversations = (from c in db.Conversations
                                                            where (c.receiver_id == uId && c.sender_id == rId) || (c.receiver_id == rId && c.sender_id == uId)
-                                                           orderby c.created_at
+                                                           orderby c.created_at ascending
                                                            select c).ToList();
                 System.Console.Write(uId.ToString(), rId);
                 ViewBag.currentUser = uId;
