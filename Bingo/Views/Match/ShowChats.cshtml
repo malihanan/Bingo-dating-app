@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Bingo.Models.User>
+
+@{
+    ViewBag.Title = "ShowChats";
+}
+
+<h2>ShowChats</h2>
+
+<table class="table">
+    <tr>
+        <th style="width:33%;">
+            <span class="glyphicon glyphicon-user" style=" margin-left: 100px;"></span>
+        </th>
+        <th style="width:33%;">
+            @Html.DisplayName("Go to Chat")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.ProfilePicture != null)
+                {
+                    var base64 = Convert.ToBase64String(item.ProfilePicture);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <div style="background-image:url(@imgsrc);height:75px;width:75px;" class="profile-picture"></div>
+                }
+                else
+                {
+                    <div style="height:45px;width:45px;margin:35px;color:lightgray;" class="profile-picture">
+                        <span class="glyphicon glyphicon-picture"></span>
+                    </div>
+                }
+                <a href="@Url.Action("Index", "User", new { id = item.UserId })">
+                    <h4>@Html.DisplayFor(modelItem => item.UserName)</h4>
+                </a>
+                <h5>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </h5>
+            </td>
+            <td>
+                <a href="@Url.Action("ConversationWithContact", "Match", new { contact = item.UserId })" style="text-decoration: none;">
+                    <div class="profile-picture" style="width:50px; height:50px; background-color: lawngreen; margin-top:0">
+                        <span class="glyphicon glyphicon-send" style="color: white; margin:10px 7px; font-size: 30px;"></span>
+                    </div>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>

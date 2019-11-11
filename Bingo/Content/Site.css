@@ -32,7 +32,7 @@ textarea {
     -moz-background-clip: padding;
     border-radius: 150px;
     background-clip: padding-box;
-    
+    margin: 7px 30px 0 5px;
     float: left;
     background-position: center center;
 }
@@ -122,4 +122,20 @@ textarea {
   font-style: italic;
   font-size: 12px;
   color: #999999;
+}
+#messageBody {
+    background-color: lightcyan;
+    height: 70vh;
+    overflow-y: auto;
+}
+ul.chat-list li {
+    padding: 15px 15px;
+    border-radius: 20px;
+    margin: 20px 20px 25px 0px;
+    background-color: #d9d9d9;
+    max-width: 50%;
+}
+ul.chat-list li.right {
+    margin-left: 50%;
+    background-color: #4d9aff;
 }

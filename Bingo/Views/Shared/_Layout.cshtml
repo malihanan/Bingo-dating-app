@@ -31,13 +31,20 @@
                     {
                         <li>@Html.ActionLink("My Account", "Index", "User")</li>
                         <li>@Html.ActionLink("Notifications", "NotificationsReceived", "Match")</li>
+                        <li>@Html.ActionLink("Chats", "ShowChats", "Match")</li>
                         <li>@Html.ActionLink("List", "List", "User")</li>
                         <li style="float:right;">@Html.ActionLink("Logout", "Logout", "User")</li>
                         <li style="float:right; margin-top:12px;">
-                            <form action="@Url.Action("List", "User")" method="post">
-
-                                <input type="text" placeholder="Search..." name="SearchString">
-                                <input type="submit" value="Search" />
+                            <!--
+            <form action="@Url.Action("List", "User")" method="post">
+                <input type="text" placeholder="Search..." name="SearchString" class="form-control">
+                <input type="submit" value="Search" />
+            </form>-->
+                            <form action="@Url.Action("List", "User")" method="post" class="form-inline my-2 my-lg-0">
+                                <input type="text" name="SearchString" class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
+                                <button class="btn btn-danger my-2 my-sm-0" type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
                             </form>
                         </li>
                     }

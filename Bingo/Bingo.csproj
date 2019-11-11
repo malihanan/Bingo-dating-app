@@ -231,6 +231,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Match\Notifications.cshtml" />
     <Content Include="Views\Match\ConversationWithContact.cshtml" />
+    <Content Include="Views\Match\ShowChats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

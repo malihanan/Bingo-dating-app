@@ -95,7 +95,7 @@ namespace Bingo.Controllers
                                                         LastName = u2.LastName,
                                                         ProfilePicture = u2.ProfilePicture,
                                                         Bio = u2.Bio,
-                                                        UserId = m.SenderId,
+                                                        UserId = m.ReceiverId,
                                                         Time = m.SenderTime,
                                                         Result = m.ReceiverResult
                                                     }).ToList();
@@ -107,10 +107,28 @@ namespace Bingo.Controllers
                 return RedirectToAction("Login", "User", null);
             }
         }
+        public ActionResult ShowChats()
+        {
+            object obj = Session["UserId"];
+            if (obj != null)
+            {
+                int uId = Int32.Parse(obj.ToString());
+                List<User> users = (from u in db.Users
+                                    from c in db.Conversations
+                                    where c.sender_id == uId || c.receiver_id == uId
+                                    orderby c.created_at
+                                    select u).Distinct().ToList();
+                return View(users);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User", null);
+            }
+        }
         public ActionResult ConversationWithContact(int contact)
         {
             object obj = Session["UserId"];
-            Session["Reciver"] = contact.ToString();
+            Session["Receiver"] = contact.ToString();
             if (obj != null)
             {
                 int uId = Int32.Parse(obj.ToString());
@@ -132,7 +150,7 @@ namespace Bingo.Controllers
         public ActionResult ConversationWithContact(String messages)
         {
             object obj = Session["UserId"];
-            object obj2 = Session["Reciver"];
+            object obj2 = Session["Receiver"];
             if (obj != null)
             {
 
