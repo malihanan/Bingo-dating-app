@@ -55,16 +55,27 @@ namespace Bingo.Controllers
             if (obj != null)
             {
                 int uId = Int32.Parse(obj.ToString());
+                bool MalePreference = Boolean.Parse(Session["MalePreference"].ToString());
+                bool FemalePreference = Boolean.Parse(Session["FemalePreference"].ToString());
+                bool OtherPreference = Boolean.Parse(Session["OtherPreference"].ToString());
+                string Gender = Session["Gender"].ToString();
                 IEnumerable<User> matchedUsers = (from u in db.Users
                                     from m in db.Matches 
                                     where (u.UserId == uId) || (m.SenderId == uId && m.ReceiverId == u.UserId)
                                                             || (m.ReceiverId == uId && m.SenderId == u.UserId)
+                                                            || (u.Gender == "Male" && !MalePreference) 
+                                                            || (u.Gender == "Female" && !FemalePreference) 
+                                                            || (u.Gender == "Other" && !OtherPreference)
+                                                            || (Gender == "Male" && !u.MalePreference)
+                                                            || (Gender == "Female" && !u.FemalePreference)
+                                                            || (Gender == "Other" && !u.OtherPreference)
                                                   select u).ToList();
                 IEnumerable<User> users;
                 IEnumerable<User> searches;
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     searches = db.Users.Where(u => u.UserName.Contains(searchString) && u.UserId != uId).ToList();
+                    searches = searches.Except(matchedUsers);
                     return View(searches);
                 }
 
@@ -108,6 +119,9 @@ namespace Bingo.Controllers
             }
             if (ModelState.IsValid)
             {
+                user.MalePreference = true;
+                user.FemalePreference = true;
+                user.OtherPreference = true;
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Login");
@@ -139,8 +153,9 @@ namespace Bingo.Controllers
                 int uId = Int32.Parse(obj.ToString());
                 var userToUpdate = db.Users.Find(uId);
                 if (TryUpdateModel(userToUpdate, "", new string[] {
-                    "UserName", "FirstName", "LastName", "Gender", "DisplayBirthdate", "City", "Occupation",
-                    "ProfilePicture", "Bio", "Likes", "Dislikes", "Hobbies", "Contact" }))
+                    "UserName", "FirstName", "LastName", "DisplayBirthdate", "City", "Occupation",
+                    "ProfilePicture", "Bio", "Likes", "Dislikes", "Hobbies", "Contact", "MalePreference", 
+                    "FemalePreference", "OtherPreference" }))
                 {
                     try
                     {
@@ -150,6 +165,11 @@ namespace Bingo.Controllers
                             file1.InputStream.Read(userToUpdate.ProfilePicture, 0, file1.ContentLength);
                         }
                         db.SaveChanges();
+
+                        User u = db.Users.Find(uId);
+                        Session["MalePreference"] = u.MalePreference.ToString();
+                        Session["FemalePreference"] = u.FemalePreference.ToString();
+                        Session["OtherPreference"] = u.OtherPreference.ToString();
 
                         return RedirectToAction("Index", "User", null);
                     }
@@ -175,7 +195,10 @@ namespace Bingo.Controllers
             if (get_user != null)
             {
                 Session["UserId"] = get_user.UserId.ToString();
-                Session["UserName"] = get_user.UserName.ToString();
+                Session["MalePreference"] = get_user.MalePreference.ToString();
+                Session["FemalePreference"] = get_user.FemalePreference.ToString();
+                Session["OtherPreference"] = get_user.OtherPreference.ToString();
+                Session["Gender"] = get_user.Gender.ToString();
                 return RedirectToAction("Index");
             }
             else

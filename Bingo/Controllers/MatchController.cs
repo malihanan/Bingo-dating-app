@@ -22,6 +22,14 @@ namespace Bingo.Controllers
             if(obj != null)
             {
                 int uId = Int32.Parse(obj.ToString());
+                string Gender = Session["Gender"].ToString();
+                User u = db.Users.Find(id);
+                if(u.UserId == uId || (Gender == "Male" && !u.MalePreference)
+                                   || (Gender == "Female" && !u.FemalePreference)
+                                   || (Gender == "Other" && !u.OtherPreference))
+                {
+                    return RedirectToAction("List", "User", null);
+                }
                 Match find = db.Matches.SingleOrDefault(m => m.SenderId == id && m.ReceiverId == uId);
                 if (find != null)
                 {
@@ -132,6 +140,14 @@ namespace Bingo.Controllers
             if (obj != null)
             {
                 int uId = Int32.Parse(obj.ToString());
+                Match match = db.Matches.FirstOrDefault(m => (m.SenderId == uId && m.ReceiverId == contact
+                                                && m.SenderResult && (bool)m.ReceiverResult) ||
+                                                            (m.SenderId == contact && m.ReceiverId == uId
+                                                && m.SenderResult && (bool)m.ReceiverResult));
+                if(match == null)
+                {
+                    return RedirectToAction("List", "User", null);
+                }
 
                 IEnumerable<Conversation> conversations = (from c in db.Conversations
                                                            where (c.receiver_id == uId && c.sender_id == contact) || (c.receiver_id == contact && c.sender_id == uId)
@@ -156,6 +172,15 @@ namespace Bingo.Controllers
 
                 int uId = Int32.Parse(obj.ToString());
                 int rId = Int32.Parse(obj2.ToString());
+
+                Match match = db.Matches.FirstOrDefault(m => (m.SenderId == uId && m.ReceiverId == rId
+                                                && m.SenderResult && (bool)m.ReceiverResult) ||
+                                                            (m.SenderId == rId && m.ReceiverId == uId
+                                                && m.SenderResult && (bool)m.ReceiverResult));
+                if (match == null)
+                {
+                    return RedirectToAction("List", "User", null);
+                }
 
                 db.Conversations.Add(new Conversation()
                 {

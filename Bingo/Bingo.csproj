@@ -177,6 +177,14 @@
     <Compile Include="Migrations\201911101918504_trupti.Designer.cs">
       <DependentUpon>201911101918504_trupti.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911120732322_BingoDb-v9.cs" />
+    <Compile Include="Migrations\201911120732322_BingoDb-v9.Designer.cs">
+      <DependentUpon>201911120732322_BingoDb-v9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911120812222_BingoDb-v10.cs" />
+    <Compile Include="Migrations\201911120812222_BingoDb-v10.Designer.cs">
+      <DependentUpon>201911120812222_BingoDb-v10.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BingoDbContext.cs" />
     <Compile Include="Models\Conversation.cs" />
@@ -279,6 +287,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911101918504_trupti.resx">
       <DependentUpon>201911101918504_trupti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911120732322_BingoDb-v9.resx">
+      <DependentUpon>201911120732322_BingoDb-v9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911120812222_BingoDb-v10.resx">
+      <DependentUpon>201911120812222_BingoDb-v10.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

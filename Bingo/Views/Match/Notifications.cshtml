@@ -85,15 +85,11 @@ else
             <td style="width: 25%">
                 @if (ViewBag.direction == "Received" && item.Result == null)
                 {
-                    <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = true })" style="text-decoration: none;">
-                        <div class="profile-picture" style="width:50px; height:50px; background-color: #fc03b6; margin-top:0">
-                            <span class="glyphicon glyphicon-ok-circle" style="color: white; margin:5px; font-size: 40px;"></span>
-                        </div>
+                    <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = true })" style="text-decoration: none; margin-right: 5px;" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-heart"></span>
                     </a>
-                    <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = false })" style="text-decoration: none;">
-                        <div class="profile-picture" style="width:50px; height:50px; background-color: cyan; margin-top:0">
-                            <span class="glyphicon glyphicon-remove-circle" style="color: white; margin:5px; font-size: 40px;"></span>
-                        </div>
+                    <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = false })" style="text-decoration: none;" class="btn btn-success">
+                        <span class="glyphicon glyphicon-ban-circle"></span>
                     </a>
                 }
                 else if (item.Result == true)
@@ -113,7 +109,7 @@ else
                         </tr>
                         <tr>
                             <td>
-                                <a class = "btn btn-success btn-sm" href="@Url.Action("ConversationWithContact", "Match", new { contact = item.UserId })">
+                                <a class="btn btn-success btn-sm" href="@Url.Action("ConversationWithContact", "Match", new { contact = item.UserId })">
                                     Say hi
                                 </a>
                             </td>
@@ -122,21 +118,21 @@ else
                 }
                 else if (item.Result == false)
                 {
-            <table>
-                <tr>
-                    <td>
-                        <div class="profile-picture" style="width:50px; height:50px; background-color: cadetblue; margin:5px">
-                            <span class="glyphicon glyphicon-ban-circle" style="color: white; margin:5px; font-size: 40px;"></span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <br />
-                        Not a Match
-                    </td>
-                </tr>
-            </table>
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="profile-picture" style="width:50px; height:50px; background-color: cadetblue; margin:5px">
+                                    <span class="glyphicon glyphicon-ban-circle" style="color: white; margin:5px; font-size: 40px;"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <br />
+                                Not a Match
+                            </td>
+                        </tr>
+                    </table>
                 }
             </td>
         </tr>

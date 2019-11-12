@@ -24,7 +24,11 @@ namespace Bingo.Models
         [RegularExpression(@"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$",
             ErrorMessage = "Contact is invalid.")]
         public string Contact { get; set; }
+        [Required]
         public string Gender { get; set; }
+        public bool MalePreference { get; set; }
+        public bool FemalePreference { get; set; }
+        public bool OtherPreference { get; set; }
         [Required]
         [ValidateDateRange]
         public DateTime Birthdate { get; set; }
