@@ -121,11 +121,18 @@ namespace Bingo.Controllers
             if (obj != null)
             {
                 int uId = Int32.Parse(obj.ToString());
-                List<User> users = (from u in db.Users
-                                    from c in db.Conversations
+                List<User> users = (from c in db.Conversations
+                                    join u in db.Users on c.sender_id equals u.UserId
                                     where c.sender_id == uId || c.receiver_id == uId
                                     orderby c.created_at
                                     select u).Distinct().ToList();
+                List<User> users2 = (from c in db.Conversations
+                                     join u in db.Users on c.receiver_id equals u.UserId
+                                     where c.sender_id == uId || c.receiver_id == uId
+                                     orderby c.created_at
+                                     select u).Distinct().ToList();
+                
+                users.AddRange(users2);
                 return View(users);
             }
             else
@@ -195,7 +202,6 @@ namespace Bingo.Controllers
                                                            where (c.receiver_id == uId && c.sender_id == rId) || (c.receiver_id == rId && c.sender_id == uId)
                                                            orderby c.created_at ascending
                                                            select c).ToList();
-                System.Console.Write(uId.ToString(), rId);
                 ViewBag.currentUser = uId;
                 return View(conversations);
             }
