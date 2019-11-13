@@ -13,7 +13,7 @@ namespace Bingo.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201911120732322_BingoDb-v9"; }
+            get { return "201911130448132_BingoDb-v9"; }
         }
         
         string IMigrationMetadata.Source
