@@ -1,15 +1,15 @@
 ﻿@{
     ViewBag.Title = "Home";
 }
-        <div class="jumbotron">
-            <h1>Bingo</h1>
+        <div class="jumbotron" style="background-color: #D4E9ED;">
+            <h1 style="color: #D42A48">Bingo</h1>
             <p class="lead">
                 This is a dating app with the goal of finding you a perfect date. Have fun!
             <p>
                 <br />
                 @if (Session["UserId"] == null)
                 {
-                    @Html.ActionLink("Create Account", "Signup", "User", null, new { @class = "btn btn-primary btn-lg" })
+                    @Html.ActionLink("Create Account", "Signup", "User", null, new { @class = "btn btn-warning btn-lg" })
                     <text>&nbsp;</text>
                     @Html.ActionLink("Login", "Login", "User", null, new { @class = "btn btn-success btn-lg" })
                 }
@@ -22,22 +22,28 @@
 
         <div class="row">
             <div class="col-md-4">
-                <h2>Getting started</h2>
-                <p>
-                    ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                    enables a clean separation of concerns and gives you full control over markup
-                    for enjoyable, agile development.
-                </p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+                <!--
+    <h2>Getting started</h2>
+    <p>
+        ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+        enables a clean separation of concerns and gives you full control over markup
+        for enjoyable, agile development.
+    </p>
+    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>-->
+                <img src="~/Content/Bingo_Date.png" alt="Date" width="60%" style="margin-left: 20%" />
             </div>
             <div class="col-md-4">
-                <h2>Get more libraries</h2>
-                <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+                <!--
+    <h2>Get more libraries</h2>
+    <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>-->
+                <img src="~/Content/Bingo_Bench.png" alt="Sunset" width="100%" />
             </div>
             <div class="col-md-4">
-                <h2>Web Hosting</h2>
-                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+                <!--
+    <h2>Web Hosting</h2>
+    <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+    <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>-->
+                <img src="~/Content/Bingo_Flowers.png" alt="Flowers" width="40%" style="margin-left: 30%"/>
             </div>
         </div>

@@ -186,6 +186,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bingo_Bench.png" />
+    <Content Include="Content\Bingo_Date.png" />
+    <Content Include="Content\Bingo_Flowers.png" />
+    <Content Include="Content\Bingo_Umbrella.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

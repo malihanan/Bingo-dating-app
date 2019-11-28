@@ -5,22 +5,21 @@
 }
 
 <h2>Edit</h2>
-
+<hr />
 
 @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>User</h4>
-    <hr />
+<div class="form-horizontal" style="background-color: #D4E9ED; max-width: 480px; padding:40px; margin: auto; border-radius: 10px;">
+    
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.UserId)
 
     <div class="form-group">
         @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -28,7 +27,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -36,14 +35,14 @@
     <div class="form-group">
         @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.Label("Preference", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("Preference", htmlAttributes: new { @class = "control-label col-md-2" }) 
+        <div class="col-md-10">&nbsp; &nbsp; &nbsp; &nbsp;
             @Html.CheckBoxFor(model => model.MalePreference, new { htmlAttributes = new { @class = "form-control" } })
             Male &nbsp;
             @Html.CheckBoxFor(model => model.FemalePreference, new { htmlAttributes = new { @class = "form-control" } })
@@ -57,9 +56,9 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DisplayBirthdate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DisplayBirthdate)
+            @Html.EditorFor(model => model.DisplayBirthdate, new { htmlAttributes = new { @style = "margin-left: 100px;" } })
+            Display Birthdate?
             @Html.ValidationMessageFor(model => model.DisplayBirthdate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -67,7 +66,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -75,7 +74,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Occupation, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Occupation, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Occupation, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.Occupation, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -83,7 +82,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -91,14 +90,14 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ProfilePicture, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <input type="file" name="file1" class="form-control" />
+            <input type="file" name="file1" class="form-control" style = "margin-left: 25px;"/>
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Bio, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Bio, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Bio, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.Bio, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -106,7 +105,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Likes, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Likes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Likes, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.Likes, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -114,7 +113,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Dislikes, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Dislikes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Dislikes, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.Dislikes, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -122,22 +121,18 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Hobbies, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Hobbies, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Hobbies, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 25px;" } })
             @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Save" class="btn btn-default btn-danger" style = "margin-left: 25px;" />
         </div>
     </div>
 </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

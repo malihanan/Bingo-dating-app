@@ -69,7 +69,7 @@ namespace Bingo.Controllers
                                                             || (Gender == "Male" && !u.MalePreference)
                                                             || (Gender == "Female" && !u.FemalePreference)
                                                             || (Gender == "Other" && !u.OtherPreference)
-                                                  select u).ToList();
+                                                  select u).ToList().Distinct();
                 IEnumerable<User> users;
                 IEnumerable<User> searches;
                 if (!String.IsNullOrEmpty(searchString))
@@ -82,7 +82,10 @@ namespace Bingo.Controllers
                 if (matchedUsers.Count() != 0)
                 {
                     users = (from u in db.Users select u).ToList();
+                    System.Console.WriteLine(users.ToList().Count);
                     users = users.Except(matchedUsers);
+                    System.Console.WriteLine(matchedUsers.ToList().Count);
+                    System.Console.WriteLine(users.ToList().Count);
                 }
                 else
                 {
@@ -93,7 +96,7 @@ namespace Bingo.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home", null);
+                return RedirectToAction("Login");
             }
         }
 

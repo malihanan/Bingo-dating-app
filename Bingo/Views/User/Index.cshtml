@@ -3,135 +3,147 @@
 @{
     ViewBag.Title = "Index";
 }
-<table style="margin-top: 20px;">
-    <tr>
-        <td>
+    <div class="row">
+        <div class="col-sm-5">
             @if (Model.ProfilePicture != null)
             {
                 var base64 = Convert.ToBase64String(Model.ProfilePicture);
                 var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                <div style="background-image: url(@imgsrc);" class="profile-picture"></div>
+                <div style="background-image: url(@imgsrc); width: 100%; height: 450px; margin-top: 40px; border-radius: 20px;"></div>
             }
             else
             {
                 <div style="color:lightgray" class="profile-picture"><span class="glyphicon glyphicon-picture" style="margin:75px"></span></div>
             }
-        </td>
-        <td>
-            <h2>
-                <small><span class="glyphicon glyphicon-user"></span></small>
-                @Html.DisplayFor(model => model.UserName)
-            </h2>
-            <h4>
-                @Html.DisplayFor(model => model.FirstName)
-                @Html.DisplayFor(model => model.LastName)
-            </h4>
-            <h5>
-                <small><span class="glyphicon glyphicon-envelope"></span></small>
-                @Html.DisplayFor(model => model.EmailId)
-            </h5>
-        </td>
-    </tr>
-</table>
-<div>
-    <hr />
-    <p>
-        <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-        @Html.DisplayFor(model => model.Bio)
-    </p>
-    <dl class="dl-horizontal">
-        @if (Model.Gender != null)
-        {
-            <dt>
-                <span class="glyphicon glyphicon-heart-empty"></span>
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Gender)
-            </dd>
-        }
+        </div>
+        <div class="col-sm-7">
+            <table style="margin-top: 20px;">
+                <tr>
+                    <td>
+                        <h2>
+                            <small><span class="glyphicon glyphicon-user"></span></small>
+                            @Html.DisplayFor(model => model.UserName)
+                        </h2>
+                        <h4>
+                            @Html.DisplayFor(model => model.FirstName)
+                            @Html.DisplayFor(model => model.LastName)
+                        </h4>
+                        <h5>
+                            <small><span class="glyphicon glyphicon-envelope"></span></small>
+                            @Html.DisplayFor(model => model.EmailId)
+                        </h5>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <hr />
+                <p>
+                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                    @Html.DisplayFor(model => model.Bio)
+                </p>
+                <dl class="dl-horizontal">
+                    @if (Model.Gender != null)
+                    {
+                        <dt>
+                            <span class="glyphicon glyphicon-heart-empty"></span>
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Gender)
+                        </dd>
+                    }
 
-        @if (Model.DisplayBirthdate)
-        {
-            <dt>
-                <span class="glyphicon glyphicon-calendar"></span>
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Birthdate)
-            </dd>
-        }
+                    @if (Model.DisplayBirthdate)
+                    {
+                        <dt>
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </dt>
+                        <dd>
+                            @Model.Birthdate.ToShortDateString()
+                        </dd>
+                    }
 
-        @if (Model.Contact != null)
-        {
-            <dt>
-                <span class="glyphicon glyphicon-earphone"></span>
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Contact)
-            </dd>
-        }
+                    @if (Model.Contact != null)
+                    {
+                        <dt>
+                            <span class="glyphicon glyphicon-earphone"></span>
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Contact)
+                        </dd>
+                    }
 
-        @if (Model.City != null)
-        {
-            <dt>
-                <span class="glyphicon glyphicon-map-marker"></span>
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.City)
-            </dd>
-        }
+                    @if (Model.City != null)
+                    {
+                        <dt>
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.City)
+                        </dd>
+                    }
 
-        @if (Model.Occupation != null)
-        {
-            <dt>
-                <span class="glyphicon glyphicon-briefcase"></span>
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Occupation)
-            </dd>
-        }
+                    @if (Model.Occupation != null)
+                    {
+                        <dt>
+                            <span class="glyphicon glyphicon-briefcase"></span>
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Occupation)
+                        </dd>
+                    }
 
-        @if (Model.Likes != null)
-        {
-            <dt>
-                <span class="glyphicon glyphicon-thumbs-up"></span>
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Likes)
-            </dd>
-        }
+                    @if (Model.Likes != null)
+                    {
+                        <dt>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Likes)
+                        </dd>
+                    }
 
-        @if (Model.Dislikes != null)
-        {
-            <dt>
-                <span class="glyphicon glyphicon-thumbs-down"></span>
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Dislikes)
-            </dd>
-        }
+                    @if (Model.Dislikes != null)
+                    {
+                        <dt>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Dislikes)
+                        </dd>
+                    }
 
-        @if (Model.Hobbies != null)
-        {
-            <dt>
-                <span class="glyphicon glyphicon-headphones"></span>
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Hobbies)
-            </dd>
-        }
+                    @if (Model.Hobbies != null)
+                    {
+                        <dt>
+                            <span class="glyphicon glyphicon-headphones"></span>
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Hobbies)
+                        </dd>
+                    }
 
-    </dl>
-</div>
-<p>
-    @if (Int32.Parse(Session["UserId"].ToString()) == Model.UserId)
-    {
-        @Html.ActionLink("Edit", "Edit")
-    }
-    else
-    {
-        <text>Like them:
-            @Html.ActionLink("Yes", "Send", "Match", new { id = Model.UserId, result = true }, null) <text> | </text>
-            @Html.ActionLink("No", "Send", "Match", new { id = Model.UserId, result = false }, null)
-        </text>
-    }
-</p>
+                </dl>
+            </div>
+
+            <p>
+                @if (Int32.Parse(Session["UserId"].ToString()) == Model.UserId)
+                {
+                    @Html.ActionLink("Edit Profile", "Edit", null, new { @class = "btn btn-sm btn-warning" })
+                }
+                else
+                {
+                    <text>Like them: &nbsp;
+                        <a href="@Url.Action("Send", "Match", new { id = Model.UserId, result = true })" style="text-decoration: none; margin-right: 5px;" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-heart"></span>
+                        </a>
+                        <a href="@Url.Action("Send", "Match", new { id = Model.UserId, result = false })" style="text-decoration: none;" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+                        </a>
+                    </text>
+                }
+            </p>
+                
+        </div>
+
+    </div>
+
