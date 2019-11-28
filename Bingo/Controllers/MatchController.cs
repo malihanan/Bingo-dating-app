@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bingo.Hubs;
 using Bingo.Models;
 
 namespace Bingo.Controllers
@@ -140,6 +141,19 @@ namespace Bingo.Controllers
                 return RedirectToAction("Login", "User", null);
             }
         }
+        public ActionResult GetMessageData()
+        {
+            object obj = Session["UserId"];
+            int contact = Int32.Parse(Session["Receiver"].ToString());
+            int uId = Int32.Parse(obj.ToString());
+            IEnumerable<Conversation> conversations = (from c in db.Conversations
+                                                       where (c.receiver_id == uId && c.sender_id == contact) || (c.receiver_id == contact && c.sender_id == uId)
+                                                       orderby c.created_at ascending
+                                                       select c).ToList();
+            ViewBag.currentUser = uId;
+            ViewBag.Receiver = db.Users.FirstOrDefault(u => u.UserId == contact).UserName.ToString();
+            return PartialView("_MessageData", conversations);
+        }
         public ActionResult ConversationWithContact(int contact)
         {
             object obj = Session["UserId"];
@@ -154,7 +168,7 @@ namespace Bingo.Controllers
                 if(match == null)
                 {
                     return RedirectToAction("List", "User", null);
-                }
+                }/*
 
                 IEnumerable<Conversation> conversations = (from c in db.Conversations
                                                            where (c.receiver_id == uId && c.sender_id == contact) || (c.receiver_id == contact && c.sender_id == uId)
@@ -162,7 +176,9 @@ namespace Bingo.Controllers
                                                            select c).ToList();
                 ViewBag.currentUser = uId;
                 ViewBag.Receiver = db.Users.FirstOrDefault(u => u.UserId == contact).UserName.ToString();
-                return View(conversations);
+                return View(conversations);*/
+
+                return View();
             }
             else
             {
@@ -198,15 +214,8 @@ namespace Bingo.Controllers
                     created_at = DateTime.Now
                 });
                 db.SaveChanges();
-
-                IEnumerable<Conversation> conversations = (from c in db.Conversations
-                                                           where (c.receiver_id == uId && c.sender_id == rId) || (c.receiver_id == rId && c.sender_id == uId)
-                                                           orderby c.created_at ascending
-                                                           select c).ToList();
-                System.Console.Write(uId.ToString(), rId);
-                ViewBag.currentUser = uId;
-                ViewBag.Receiver = db.Users.FirstOrDefault(u => u.UserId == rId).UserName.ToString();
-                return View(conversations);
+                MessagesHub.BroadcastData();
+                return RedirectToAction("ConversationWithContact", new { contact = rId });
             }
             else
             {

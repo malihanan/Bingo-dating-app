@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Bingo.Models.Conversation>
+
+
+<h1>
+    @ViewBag.Receiver
+</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12" id="messageBody">
+            <ul style="list-style-type: none;" class="list-group chat-list">
+
+                @foreach (var item in Model)
+                {
+                    if (item.sender_id == ViewBag.currentUser)
+                    {
+                        <li class="right">
+                            @Html.DisplayFor(modelItem => item.message)
+                            &nbsp;
+                            <span style="font-size: 0.7em; color: cyan;">
+                                <span class="glyphicon glyphicon-time"></span>
+                                @item.created_at.ToShortTimeString()
+                            </span>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @Html.DisplayFor(modelItem => item.message)
+                            &nbsp;
+                            <span style="font-size: 0.7em; color: white;">
+                                <span class="glyphicon glyphicon-time"></span>
+                                @item.created_at.ToShortTimeString()
+                            </span>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div style="background-color: #e6e6e6;">
+            <form action="@Url.Action("ConversationWithContact", "Match")" id="cform" method="post" style="width:inherit">
+                <textarea name="messages" class="form-control col-xs-12" id="msg_box" placeholder="Type your message" style="margin: 5px;"></textarea>
+
+                <button type="submit" style="margin: 10px;" id="sendMessage" class="btn btn-lg btn-success">
+                    <span class="glyphicon glyphicon-send"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+        var messageBody = document.querySelector('#messageBody');
+        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+</script>

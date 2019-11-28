@@ -1,50 +1,34 @@
-﻿@model IEnumerable<Bingo.Models.Conversation>
-
-@{
+﻿@{
     ViewBag.Title = "ConversationWithContact";
 }
 
+<div id="dataModel"></div>
 
-<!DOCTYPE html>
-<html>
+@section JavaScript{
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            var hubNotify = $.connection.messagesHub;
 
-<body>
-    <h1>
-        @ViewBag.Receiver
-    </h1>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12" id="messageBody">
-                <ul style="list-style-type: none;" class="list-group chat-list">
+            $.connection.hub.start().done(function () {
+                getAll();
+            });
 
-                    @foreach (var item in Model)
-                    {
-                        if (item.sender_id == ViewBag.currentUser)
-                        {
-                            <li class="right">@Html.DisplayFor(modelItem => item.message)</li>
-                        }
-                        else
-                        {
-                            <li>@Html.DisplayFor(modelItem => item.message)</li>
-                        }
-                    }
-                </ul>
-            </div>
-            <div style="background-color: #e6e6e6;">
-                <form action="@Url.Action("ConversationWithContact", "Match")" id="cform" method="post" style="width:inherit">
-                    <textarea name="messages" class="form-control col-xs-12" id="msg_box" placeholder="Type your message" style="margin: 5px;"></textarea>
-                    
-                    <button type="submit" style="margin: 10px;" id="sendMessage" class="btn btn-lg btn-success">
-                        <span class="glyphicon glyphicon-send"></span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <script>
-        var messageBody = document.querySelector('#messageBody');
-        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+            hubNotify.client.refreshMessageData = function () {
+                getAll();
+            };
+        });
+
+        function getAll() {
+            var model = $('#dataModel');
+            $.ajax({
+                url: '/Match/GetMessageData',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) { model.empty().append(result); }
+            });
+        }
     </script>
-</body>
-</html>
-
+}  
