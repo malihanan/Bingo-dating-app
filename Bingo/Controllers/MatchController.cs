@@ -133,7 +133,7 @@ namespace Bingo.Controllers
                                      select u).Distinct().ToList();
 
                 users.AddRange(users2);
-                return View(users);
+                return View(users.Distinct());
             }
             else
             {
